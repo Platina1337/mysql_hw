@@ -51,8 +51,11 @@ ORDER by authors.name;
 
 -- 8. 
 UPDATE books
-SET books.friends_id = 1
-WHERE id = 9;
+JOIN authors_books ON authors_books.books_id = books.id
+JOIN authors ON authors_books.authors_id = authors.id
+SET books.friends_id = (SELECT friends.id FROM friends WHERE friends.name = 'Иванов Иван')
+WHERE authors.name = 'Данте Алигьери' AND books.title = 'Божественная комедия'
+AND books.id > 0;
 
 -- 9.
 INSERT INTO books (title, year, shelves_id) 
